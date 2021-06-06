@@ -81,18 +81,20 @@ function renderThreeImages() {
   rightImageElement.src=Product.allProducts[rightImageIndex].imgSource;
   Product.allProducts[rightImageIndex].timeShown++;
 
-
 }
 
 renderThreeImages();
 
 imagesContainer.addEventListener('click',handleUserClick);
+
+let button=document.getElementById('resultBox');
+button.addEventListener('click',handleUserClick);
+
+
 // leftImageElement.addEventListener('click',handleUserClick);
 // midImageElement.addEventListener('click',handleUserClick);
 // rightImageElement.addEventListener('click',handleUserClick);
 
-let button=document.getElementById('resultBox');
-button.addEventListener('click',handleUserClick);
 
 
 function handleUserClick(event) {
@@ -120,15 +122,16 @@ function handleUserClick(event) {
   }else{
 
     document.getElementById("demo").onclick = function() {resultButton()};
+    
     // stop the clicking
+    imagesContainer.removeEventListener('click',handleUserClick);
     // leftImageElement.removeEventListener('click',handleUserClick);
     // midImageElement.removeEventListener('click',handleUserClick);
     // rightImageElement.removeEventListener('click',handleUserClick);
     
-    imagesContainer.removeEventListener('click',handleUserClick);
     
+    renderThreeImages();
   }
-  renderThreeImages();
 }
 
 // show results
