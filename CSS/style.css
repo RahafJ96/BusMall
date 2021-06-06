@@ -1,0 +1,48 @@
+img{
+    width: 400px;
+    height: 400px;
+  }
+  img{
+    margin-left: 20px;
+  }
+  div{
+   padding-left: 150px;
+  }
+  
+  body{
+    background-color: whitesmoke;
+    width: 95%;
+  }
+  
+  p{
+    font-size: 150%;
+    font-weight: bolder;
+    margin: 50px 50px 50px 0px;
+    text-align: center;
+    color: rgb(49, 155, 123);
+  }
+  
+  ul{
+    margin-top: 50px;
+  }
+  
+  li{
+    margin-top: 10px;
+    list-style-type: none;
+    color: rgb(20, 116, 145);
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  button {
+    background-color: #4c8baf;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    margin: 4px 670px;
+    cursor: pointer;
+  }
