@@ -4,7 +4,7 @@ let leftImageElement=document.getElementById('left-image');
 let midImageElement=document.getElementById('mid-image');
 let rightImageElement=document.getElementById('right-image');
 
-let maxAttempts=10; //change to 25 at last <--------------
+let maxAttempts=25; //change to 25 at last <--------------
 let userAttemptsCounter=0;
 
 // The random number index for the each image
