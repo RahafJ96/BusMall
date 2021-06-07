@@ -150,5 +150,5 @@ function resultButton(){
         button.removeEventListener('click',resultButton);
 
         renderThreeImages();
-   
+        button.hidden=true;
     }
