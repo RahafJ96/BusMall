@@ -4,7 +4,7 @@ let leftImageElement=document.getElementById('left-image');
 let midImageElement=document.getElementById('mid-image');
 let rightImageElement=document.getElementById('right-image');
 
-let maxAttempts=10; //change to 25 at last <--------------
+let maxAttempts=25; //change to 25 at last <--------------
 let userAttemptsCounter=0;
 
 // The random number index for the each image
@@ -88,8 +88,10 @@ renderThreeImages();
 imagesContainer.addEventListener('click',handleUserClick);
 
 let button;
+
 // =document.getElementById('button');
 // button.addEventListener('click',handleUserClick);
+
 
 
 // leftImageElement.addEventListener('click',handleUserClick);
@@ -124,9 +126,12 @@ function handleUserClick(event) {
     renderThreeImages();
 
   }else{
-    button = document.getElementById('button');
+
+
+    button = document.getElementById('demo');
     button.hidden = false;
-    button.addEventListener('click',resultButton);
+    button.addEventListener('click',resultButton);    
+
     // document.getElementById("demo").onclick = function() {resultButton()};
     
     // stop the clicking
@@ -136,7 +141,8 @@ function handleUserClick(event) {
     // rightImageElement.removeEventListener('click',handleUserClick);
     
     
-    // renderThreeImages();
+   // renderThreeImages();
+
   }
 }
 
@@ -151,6 +157,10 @@ function resultButton(){
         productResults.textContent=`${Product.allProducts[i].name} has ${Product.allProducts[i].votes} votes and shown ${Product.allProducts[i].timeShown} times `;
         }
         button.removeEventListener('click',resultButton);
+
+
+        renderThreeImages();
+        button.hidden=true;
         //renderThreeImages();
    
     }
