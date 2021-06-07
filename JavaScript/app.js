@@ -6,12 +6,11 @@ let rightImageElement=document.getElementById('right-image');
 
 let maxAttempts=10; //change to 25 at last <--------------
 let userAttemptsCounter=0;
-
+let prevRound=[];
 // The random number index for the each image
 let leftImageIndex; 
 let midImageIndex;
 let rightImageIndex;
-
 let nameProduct=[];
 let votes=[];
 let timeShown=[];
@@ -21,7 +20,7 @@ function Product(name,imgSource) {
   this.imgSource = imgSource;
   this.timeShown = 0;
   this.votes=0;
-
+  
   nameProduct.push(this.name);
   Product.allProducts.push(this);
 }
@@ -29,7 +28,6 @@ function Product(name,imgSource) {
 // will contain all of the goats that will be created
 
 Product.allProducts=[];
-
 
 new Product('bag','Images/bag.jpg');//0
 new Product('banana','Images/banana.jpg');//1
@@ -52,7 +50,7 @@ new Product('usb','Images/usb.gif');//17
 new Product('water-can','Images/water-can.jpg');//18
 new Product('wine-glass','Images/wine-glass.jpg');//19
 
-//console.log(Product.allProducts);
+console.log(Product.allProducts);
 
 
 function generateRandomIndex() {
@@ -62,35 +60,42 @@ function generateRandomIndex() {
 
 
 function renderThreeImages() {
-
+  
   leftImageIndex=generateRandomIndex();
   midImageIndex=generateRandomIndex();
   rightImageIndex=generateRandomIndex();
-
-  while ((leftImageIndex===rightImageIndex) || (leftImageIndex===midImageIndex) || (midImageIndex===rightImageIndex) ) {
+  
+  
+  while ((leftImageIndex===rightImageIndex) || (leftImageIndex===midImageIndex) || (midImageIndex===rightImageIndex)|| 
+  prevRound.includes(leftImageIndex) || prevRound.includes(midImageIndex)||prevRound.includes(rightImageIndex)) {
+    
     rightImageIndex=generateRandomIndex();
     midImageIndex=generateRandomIndex();
+    leftImageIndex=generateRandomIndex();
     
   }
-
-
-
+  
+ // prevRound=[leftImageIndex,midImageIndex,rightImageIndex];
+  console.log(prevRound);
+  prevRound=[];
+  prevRound.push(leftImageIndex,midImageIndex,rightImageIndex);
+  
+  
   // console.log(Product.allProducts[leftImageIndex].imgSource);
-
+  
   leftImageElement.src=Product.allProducts[leftImageIndex].imgSource;
   Product.allProducts[leftImageIndex].timeShown++;
   midImageElement.src=Product.allProducts[midImageIndex].imgSource;
   Product.allProducts[midImageIndex].timeShown++;
   rightImageElement.src=Product.allProducts[rightImageIndex].imgSource;
   Product.allProducts[rightImageIndex].timeShown++;
-
+  
 }
 
+// console.log(turn1);
 renderThreeImages();
 
 imagesContainer.addEventListener('click',handleUserClick);
-
-let button;
 
 // =document.getElementById('button');
 // button.addEventListener('click',handleUserClick);
@@ -107,34 +112,34 @@ function handleUserClick(event) {
   
   // console.log(event.target.id);
   userAttemptsCounter++;
-
-
+  
+  
   if (userAttemptsCounter<=maxAttempts) {
-
-
+    
+    
     if (event.target.id==='left-image') {
- 
+      
       Product.allProducts[leftImageIndex].votes++
-
+      
     }else if (event.target.id==='right-image')  {
       Product.allProducts[rightImageIndex].votes++
-
+      
     }else if (event.target.id==='mid-image')  {
       Product.allProducts[midImageIndex].votes++
-
+      
     }else{
       alert('Please only click on images');
       userAttemptsCounter--;
     }
     renderThreeImages();
-
+    
   }else{
-
-
-    button = document.getElementById('demo');
+    
+    
+    let button = document.getElementById('demo');
     button.hidden = false;
     button.addEventListener('click',resultButton);    
-
+    
     // document.getElementById("demo").onclick = function() {resultButton()};
     
     // stop the clicking
@@ -144,15 +149,15 @@ function handleUserClick(event) {
     // rightImageElement.removeEventListener('click',handleUserClick);
     
     
-    renderThreeImages();
-
-   for (let i = 0; i < Product.allProducts.length; i++) {
-   
-     votes.push(Product.allProducts[i].votes);
-     timeShown.push(Product.allProducts[i].timeShown);
-   }
-   
-   chart();
+    // renderThreeImages();
+    
+    for (let i = 0; i < Product.allProducts.length; i++) {
+      
+      votes.push(Product.allProducts[i].votes);
+      timeShown.push(Product.allProducts[i].timeShown);
+    }
+    
+    chart();
   }
 }
 
@@ -160,25 +165,25 @@ function handleUserClick(event) {
 function resultButton(){
   let list=document.getElementById('resultBox');
   for (let i = 0; i < Product.allProducts.length; i++) {
-        let productResults=document.createElement('li');
-        
-        list.append(productResults);
-        
-        productResults.textContent=`${Product.allProducts[i].name} has ${Product.allProducts[i].votes} votes and shown ${Product.allProducts[i].timeShown} times `;
-        }
-        button.removeEventListener('click',resultButton);
+    let productResults=document.createElement('li');
+    
+    list.append(productResults);
+    
+    productResults.textContent=`${Product.allProducts[i].name} has ${Product.allProducts[i].votes} votes and shown ${Product.allProducts[i].timeShown} times `;
+  }
+  
+  
+  //button.removeEventListener('click',resultButton);
+  
+  button.hidden=true;
+  //renderThreeImages();
+  
+}
 
-
-
-        button.hidden=true;
-        //renderThreeImages();
-   
-    }
-
-    function chart() {
-      let ctx = document.getElementById('myChart');
-      let myChart = new Chart(ctx, {
-          type: 'bar',
+function chart() {
+  let ctx = document.getElementById('myChart');
+  let myChart = new Chart(ctx, {
+    type: 'bar',
           data: {
               labels:nameProduct,
               datasets: [{
@@ -190,7 +195,11 @@ function resultButton(){
                       'rgba(255, 206, 86, 0.2)',
                       'rgba(75, 192, 192, 0.2)',
                       'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)'
+                      'rgb(0, 204, 0, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgb(204, 0, 0, 0.2)',
+                      'rgb(255, 102, 0, 0.2)'
+
                   ],
                   borderColor: [
                       'rgba(255, 99, 132, 1)',
@@ -198,20 +207,27 @@ function resultButton(){
                       'rgba(255, 206, 86, 1)',
                       'rgba(75, 192, 192, 1)',
                       'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
+                      'rgb(0, 204, 0, 1)',
+                      'rgba(255, 159, 64, 1)',
+                      'rgb(204, 0, 0, 1)',
+                      'rgb(255, 102, 0, 1)'
                   ],
                   borderWidth: 1
               },
               {
                 label: '# of Shown',
-                data:timeshown,
+                data:timeShown,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
                     'rgba(255, 206, 86, 0.2)',
                     'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgb(0, 204, 0, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgb(204, 0, 0, 0.2)',
+                    'rgb(255, 102, 0, 0.2)'
+
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
@@ -219,7 +235,11 @@ function resultButton(){
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
                     'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    'rgb(0, 204, 0, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgb(204, 0, 0, 1)',
+                    'rgb(255, 102, 0, 1)'
+
                 ],
                 borderWidth: 1
             }
