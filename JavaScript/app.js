@@ -49,7 +49,7 @@ new Product('usb','Images/usb.gif');//17
 new Product('water-can','Images/water-can.jpg');//18
 new Product('wine-glass','Images/wine-glass.jpg');//19
 
-console.log(Product.allProducts);
+//console.log(Product.allProducts);
 
 
 function generateRandomIndex() {
@@ -89,6 +89,10 @@ imagesContainer.addEventListener('click',handleUserClick);
 
 let button;
 
+// =document.getElementById('button');
+// button.addEventListener('click',handleUserClick);
+
+
 
 // leftImageElement.addEventListener('click',handleUserClick);
 // midImageElement.addEventListener('click',handleUserClick);
@@ -123,9 +127,13 @@ function handleUserClick(event) {
 
   }else{
 
+
     button = document.getElementById('demo');
     button.hidden = false;
     button.addEventListener('click',resultButton);    
+
+    // document.getElementById("demo").onclick = function() {resultButton()};
+    
     // stop the clicking
     imagesContainer.removeEventListener('click',handleUserClick);
     // leftImageElement.removeEventListener('click',handleUserClick);
@@ -134,6 +142,7 @@ function handleUserClick(event) {
     
     
    // renderThreeImages();
+
   }
 }
 
@@ -149,6 +158,9 @@ function resultButton(){
         }
         button.removeEventListener('click',resultButton);
 
+
         renderThreeImages();
         button.hidden=true;
+        //renderThreeImages();
+   
     }
