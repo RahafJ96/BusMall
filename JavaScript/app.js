@@ -4,7 +4,7 @@ let leftImageElement=document.getElementById('left-image');
 let midImageElement=document.getElementById('mid-image');
 let rightImageElement=document.getElementById('right-image');
 
-let maxAttempts=10; //change to 25 at last <--------------
+let maxAttempts=25; //change to 25 at last <--------------
 let userAttemptsCounter=0;
 let prevRound=[];
 // The random number index for the each image
@@ -158,6 +158,7 @@ function handleUserClick(event) {
     }
     
     chart();
+
   }
 }
 
@@ -254,4 +255,13 @@ function chart() {
           }
       });
         
+        productResults.textContent=`${Product.allProducts[i].name} has ${Product.allProducts[i].votes} votes and shown ${Product.allProducts[i].timeShown} times `;
+        }
+        button.removeEventListener('click',resultButton);
+
+
+        renderThreeImages();
+        button.hidden=true;
+        //renderThreeImages();
+   
     }
