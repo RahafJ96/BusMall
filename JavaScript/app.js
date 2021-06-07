@@ -4,7 +4,7 @@ let leftImageElement=document.getElementById('left-image');
 let midImageElement=document.getElementById('mid-image');
 let rightImageElement=document.getElementById('right-image');
 
-let maxAttempts=10; //change to 25 at last <--------------
+let maxAttempts=25; //change to 25 at last <--------------
 let userAttemptsCounter=0;
 
 // The random number index for the each image
@@ -87,8 +87,7 @@ renderThreeImages();
 
 imagesContainer.addEventListener('click',handleUserClick);
 
-let button=document.getElementById('resultBox');
-button.addEventListener('click',handleUserClick);
+let button;
 
 
 // leftImageElement.addEventListener('click',handleUserClick);
@@ -113,16 +112,20 @@ function handleUserClick(event) {
     }else if (event.target.id==='right-image')  {
       Product.allProducts[rightImageIndex].votes++
 
-    }else{
+    }else if (event.target.id==='mid-image')  {
       Product.allProducts[midImageIndex].votes++
 
+    }else{
+      alert('Please only click on images');
+      userAttemptsCounter--;
     }
     renderThreeImages();
 
   }else{
 
-    document.getElementById("demo").onclick = function() {resultButton()};
-    
+    button = document.getElementById('demo');
+    button.hidden = false;
+    button.addEventListener('click',resultButton);    
     // stop the clicking
     imagesContainer.removeEventListener('click',handleUserClick);
     // leftImageElement.removeEventListener('click',handleUserClick);
@@ -130,7 +133,7 @@ function handleUserClick(event) {
     // rightImageElement.removeEventListener('click',handleUserClick);
     
     
-    renderThreeImages();
+   // renderThreeImages();
   }
 }
 
@@ -144,6 +147,8 @@ function resultButton(){
         
         productResults.textContent=`${Product.allProducts[i].name} has ${Product.allProducts[i].votes} votes and shown ${Product.allProducts[i].timeShown} times `;
         }
+        button.removeEventListener('click',resultButton);
+
         renderThreeImages();
    
     }
