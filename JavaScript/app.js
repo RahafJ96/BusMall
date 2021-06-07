@@ -4,7 +4,7 @@ let leftImageElement=document.getElementById('left-image');
 let midImageElement=document.getElementById('mid-image');
 let rightImageElement=document.getElementById('right-image');
 
-let maxAttempts=25; //change to 25 at last <--------------
+let maxAttempts=10; //change to 25 at last <--------------
 let userAttemptsCounter=0;
 
 // The random number index for the each image
@@ -49,7 +49,7 @@ new Product('usb','Images/usb.gif');//17
 new Product('water-can','Images/water-can.jpg');//18
 new Product('wine-glass','Images/wine-glass.jpg');//19
 
-console.log(Product.allProducts);
+//console.log(Product.allProducts);
 
 
 function generateRandomIndex() {
@@ -87,8 +87,9 @@ renderThreeImages();
 
 imagesContainer.addEventListener('click',handleUserClick);
 
-let button=document.getElementById('resultBox');
-button.addEventListener('click',handleUserClick);
+let button;
+// =document.getElementById('button');
+// button.addEventListener('click',handleUserClick);
 
 
 // leftImageElement.addEventListener('click',handleUserClick);
@@ -113,15 +114,20 @@ function handleUserClick(event) {
     }else if (event.target.id==='right-image')  {
       Product.allProducts[rightImageIndex].votes++
 
-    }else{
+    }else if (event.target.id==='mid-image')  {
       Product.allProducts[midImageIndex].votes++
 
+    }else{
+      alert('Please only click on images');
+      userAttemptsCounter--;
     }
     renderThreeImages();
 
   }else{
-
-    document.getElementById("demo").onclick = function() {resultButton()};
+    button = document.getElementById('button');
+    button.hidden = false;
+    button.addEventListener('click',resultButton);
+    // document.getElementById("demo").onclick = function() {resultButton()};
     
     // stop the clicking
     imagesContainer.removeEventListener('click',handleUserClick);
@@ -130,7 +136,7 @@ function handleUserClick(event) {
     // rightImageElement.removeEventListener('click',handleUserClick);
     
     
-    renderThreeImages();
+    // renderThreeImages();
   }
 }
 
@@ -144,6 +150,7 @@ function resultButton(){
         
         productResults.textContent=`${Product.allProducts[i].name} has ${Product.allProducts[i].votes} votes and shown ${Product.allProducts[i].timeShown} times `;
         }
-        renderThreeImages();
+        button.removeEventListener('click',resultButton);
+        //renderThreeImages();
    
     }
