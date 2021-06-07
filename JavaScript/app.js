@@ -12,7 +12,9 @@ let leftImageIndex;
 let midImageIndex;
 let rightImageIndex;
 
-
+let nameProduct=[];
+let votes=[];
+let timeShown=[];
 
 function Product(name,imgSource) {
   this.name = name;
@@ -20,6 +22,7 @@ function Product(name,imgSource) {
   this.timeShown = 0;
   this.votes=0;
 
+  nameProduct.push(this.name);
   Product.allProducts.push(this);
 }
 
@@ -88,8 +91,10 @@ renderThreeImages();
 imagesContainer.addEventListener('click',handleUserClick);
 
 let button;
+
 // =document.getElementById('button');
 // button.addEventListener('click',handleUserClick);
+
 
 
 // leftImageElement.addEventListener('click',handleUserClick);
@@ -124,9 +129,12 @@ function handleUserClick(event) {
     renderThreeImages();
 
   }else{
-    button = document.getElementById('button');
+
+
+    button = document.getElementById('demo');
     button.hidden = false;
-    button.addEventListener('click',resultButton);
+    button.addEventListener('click',resultButton);    
+
     // document.getElementById("demo").onclick = function() {resultButton()};
     
     // stop the clicking
@@ -136,7 +144,15 @@ function handleUserClick(event) {
     // rightImageElement.removeEventListener('click',handleUserClick);
     
     
-    // renderThreeImages();
+    renderThreeImages();
+
+   for (let i = 0; i < Product.allProducts.length; i++) {
+   
+     votes.push(Product.allProducts[i].votes);
+     timeShown.push(Product.allProducts[i].timeShown);
+   }
+   
+   chart();
   }
 }
 
@@ -151,6 +167,71 @@ function resultButton(){
         productResults.textContent=`${Product.allProducts[i].name} has ${Product.allProducts[i].votes} votes and shown ${Product.allProducts[i].timeShown} times `;
         }
         button.removeEventListener('click',resultButton);
+
+
+
+        button.hidden=true;
         //renderThreeImages();
    
+    }
+
+    function chart() {
+      let ctx = document.getElementById('myChart');
+      let myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels:nameProduct,
+              datasets: [{
+                  label: '# of Votes',
+                  data:votes,
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                  ],
+                  borderWidth: 1
+              },
+              {
+                label: '# of Shown',
+                data:timeshown,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }
+            ]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+        
     }
