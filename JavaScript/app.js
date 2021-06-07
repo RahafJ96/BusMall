@@ -254,14 +254,5 @@ function chart() {
               }
           }
       });
-        
-        productResults.textContent=`${Product.allProducts[i].name} has ${Product.allProducts[i].votes} votes and shown ${Product.allProducts[i].timeShown} times `;
-        }
-        button.removeEventListener('click',resultButton);
-
-
-        renderThreeImages();
-        button.hidden=true;
-        //renderThreeImages();
-   
     }
+    
