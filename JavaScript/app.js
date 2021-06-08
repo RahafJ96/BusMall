@@ -4,7 +4,7 @@ let leftImageElement=document.getElementById('left-image');
 let midImageElement=document.getElementById('mid-image');
 let rightImageElement=document.getElementById('right-image');
 
-let maxAttempts=25; //change to 25 at last <--------------
+let maxAttempts=10; //change to 25 at last <--------------
 let userAttemptsCounter=0;
 let prevRound=[];
 // The random number index for the each image
@@ -50,12 +50,33 @@ new Product('usb','Images/usb.gif');//17
 new Product('water-can','Images/water-can.jpg');//18
 new Product('wine-glass','Images/wine-glass.jpg');//19
 
-console.log(Product.allProducts);
+// console.log(Product.allProducts);
 
 
 function generateRandomIndex() {
   return Math.floor(Math.random() * Product.allProducts.length); 
 }
+
+function updateStorage(){
+  let arrayStorage=JSON.stringify(Product.allProducts);
+  localStorage.setItem('products',arrayStorage);
+  
+}
+
+function getProductInfo(){
+  let data= localStorage.getItem('products');
+  let productData=JSON.parse(data);
+
+  //console.log(data);
+  
+  
+  if (productData!==null) {   
+    Product.allProducts=productData;
+  }
+  renderThreeImages();
+  
+}
+
 
 
 
@@ -75,8 +96,8 @@ function renderThreeImages() {
     
   }
   
- // prevRound=[leftImageIndex,midImageIndex,rightImageIndex];
-  console.log(prevRound);
+  // prevRound=[leftImageIndex,midImageIndex,rightImageIndex];
+  //console.log(prevRound);
   prevRound=[];
   prevRound.push(leftImageIndex,midImageIndex,rightImageIndex);
   
@@ -110,6 +131,7 @@ imagesContainer.addEventListener('click',handleUserClick);
 
 function handleUserClick(event) {
   
+  updateStorage();
   // console.log(event.target.id);
   userAttemptsCounter++;
   
@@ -176,7 +198,7 @@ function resultButton(){
   
   //button.removeEventListener('click',resultButton);
   
-  button.hidden=true;
+ // button.hidden=true;
   //renderThreeImages();
   
 }
@@ -256,3 +278,5 @@ function chart() {
       });
     }
     
+
+    getProductInfo();
